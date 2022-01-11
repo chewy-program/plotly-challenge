@@ -22,8 +22,7 @@
       <div class="col-md-2">
         <div class="well">
           <h5>Test Subject ID No.:</h5>
-          <select id="selDataset" onchange="metadata(this.value)">
-            <option id = "id-option" value="ID"></option>
+          <select id="selDataset" onchange="getData(this.value)" style="width:50px">
           </select>
         </div>
       </div>
@@ -44,8 +43,25 @@
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">Demographic Info</h3>
-        <h4 class="Demo-info"></h4>
+        
       </div>
+        <div class="panel-body" id="Demo-info">
+          <table id="table" class="table table-striped">
+            <thead>
+              <tr>
+                <th class="table-head">ID</th>
+                <th class="table-head">Ethnicity</th>
+                <th class="table-head">Gender</th>
+                <th class="table-head">Age</th>
+                <th class="table-head">Location</th>
+                <th class="table-head">Type</th>
+                <th class="table-head">Wash Frequency</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
       <div id="sample-metadata" class="panel-body"></div>
     </div>
   </div>
