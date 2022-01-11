@@ -123,35 +123,43 @@ function bubble(){ d3.json("../StarterCode/samples.json").then((importedData) =>
 
 bubble();
 // 4. Display the sample metadata, i.e., an individual's demographic information.
-function metadata() {d3.json("../StarterCode/samples.json").then((importedData) => {
+function sample_set() {d3.json("../StarterCode/samples.json").then((importedData) => {
     var allData = importedData;
     var metadata = allData.metadata;
-    
-    metadata.forEach(({id, ethnicity, gender, age, location, bbtype, wfreq}) =>
-            document.getElementById('selDataset').innerHTML +='<option value="'+id+'"></option>'
-    );
+    var objects = Object.values(metadata)
+    var selectElement = d3.select("#selDataset")
+    objects.forEach(({id}) => {
+            var optionElement = selectElement.append("option", "option Value")
+            optionElement.html(id)
+            // selectElement.append(optionElement)
+    });
   
 })}
-metadata()
+sample_set()
 function getData() {d3.json("../StarterCode/samples.json").then((importedData) => {
     var allData = importedData;
-    var metadata = Object.values(allData.metadata);
-    var demoInfo = d3.select("Demo-info");
-    var inputElement = d3.select("#selDataset");
-    var inputValue = inputElement.property("value");
-    var filteredData = metadata.filter(md => md.id === inputValue)
-    filteredData.forEach(({id, ethnicity, gender, age, location, bbtype, wfreq}) => {
-        var field = demoInfo.append("p")
-        field.append("p").text(id);
-        field.append("p").text(ethnicity);
-        field.append("p").text(gender);
-        field.append("p").text(age);
-        field.append("p").text(location);
-        field.append("p").text(bbtype);
-        field.append("p").text(wfreq);
+    var metadata = allData.metadata
+    var demoInfo = d3.select("#Demo-info"); 
+    var tbody = d3.select("tbody");
+    var objects = Object.values(metadata);
+    var inputElement = d3.select("option");
+    var inputValue = inputElement.node().value;
+    console.log(inputValue)
+    var filteredObject = metadata.filter(md => md.id === inputValue);
+    console.log(filteredObject)
+    metadata.forEach(({id, ethnicity, gender, age, location, bbtype, wfreq}) => {
+        var row = tbody.append("tr");
+        row.append("td").text(id);
+        row.append("td").text(ethnicity);
+        row.append("td").text(gender);
+        row.append("td").text(age);
+        row.append("td").text(location);
+        row.append("td").text(bbtype);
+        row.append("td").text(wfreq);
 
     });
-})};
+}); 
+};
 getData()
     // Assign the value of the dropdown menu option to a variable
     // Initialize an empty array for the country's data
