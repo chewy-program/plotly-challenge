@@ -1,5 +1,42 @@
 // 1. Use the D3 library to read in `samples.json`.
 // 2. Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
+function sample_set() {d3.json("../StarterCode/samples.json").then((importedData) => {
+    var allData = importedData;
+    var metadata = allData.metadata;
+    var objects = Object.values(metadata)
+    var selectOElement = d3.select("#selOption")
+    objects.forEach(({id}) => {
+            
+            var optionOElement = selectOElement.append("option");
+            
+            optionOElement.html(id);
+            optionOElement.attr('value',id);
+            optionOElement.attr("id", "optionID");
+    });
+  
+})};
+sample_set();
+// 4. Display the sample metadata, i.e., an individual's demographic information.
+function tableData() {d3.json("../StarterCode/samples.json").then((importedData) => {
+    var allData = importedData;
+    var metadata = allData.metadata
+    var tbody = d3.select("tbody");
+    // console.log(filteredObject)
+    metadata.forEach(({id, ethnicity, gender, age, location, bbtype, wfreq}) => {
+        var row = tbody.append("tr");
+        row.append("td").text(id);
+        row.append("td").text(ethnicity);
+        row.append("td").text(gender);
+        row.append("td").text(age);
+        row.append("td").text(location);
+        row.append("td").text(bbtype);
+        row.append("td").text(wfreq);
+
+    });
+}); 
+};
+tableData();
+
 function horibar() {d3.json("../StarterCode/samples.json").then((importedData) => {
     var allData = importedData;
     var sample_data = allData.samples;
@@ -59,8 +96,7 @@ function horibar() {d3.json("../StarterCode/samples.json").then((importedData) =
         // Render the plot to the div tag with id "plot"
         Plotly.newPlot("plot-container plotly", barChartData, barLayout);
     });
-})};
-horibar();
+})}
 
 function bubble(){ d3.json("../StarterCode/samples.json").then((importedData) => {
     var allData = importedData;
@@ -85,7 +121,7 @@ function bubble(){ d3.json("../StarterCode/samples.json").then((importedData) =>
             x: otids,
             y: sv,
             mode: 'markers',
-            text: [[otids], [otlabels]],
+            text: [[otlabels]],
             
             marker: {
                 color: sv,
@@ -119,61 +155,47 @@ function bubble(){ d3.json("../StarterCode/samples.json").then((importedData) =>
 
         // ![Bubble Chart](Images/bubble_chart.png)
     });
-})};
-
-bubble();
-// 4. Display the sample metadata, i.e., an individual's demographic information.
-function sample_set() {d3.json("../StarterCode/samples.json").then((importedData) => {
-    var allData = importedData;
-    var metadata = allData.metadata;
-    var objects = Object.values(metadata)
-    var selectElement = d3.select("#selDataset")
-    objects.forEach(({id}) => {
-            var optionElement = selectElement.append("option", "option Value")
-            optionElement.html(id)
-            // selectElement.append(optionElement)
-    });
-  
 })}
-sample_set()
+d3.selectAll("#selOption").on("change", getData);
 function getData() {d3.json("../StarterCode/samples.json").then((importedData) => {
-    var allData = importedData;
-    var metadata = allData.metadata
-    var demoInfo = d3.select("#Demo-info"); 
-    var tbody = d3.select("tbody");
-    var objects = Object.values(metadata);
-    var inputElement = d3.select("option");
-    var inputValue = inputElement.node().value;
-    console.log(inputValue)
-    var filteredObject = metadata.filter(md => md.id === inputValue);
-    console.log(filteredObject)
-    metadata.forEach(({id, ethnicity, gender, age, location, bbtype, wfreq}) => {
-        var row = tbody.append("tr");
-        row.append("td").text(id);
-        row.append("td").text(ethnicity);
-        row.append("td").text(gender);
-        row.append("td").text(age);
-        row.append("td").text(location);
-        row.append("td").text(bbtype);
-        row.append("td").text(wfreq);
+        var allData = importedData;
+        var sample_data = allData.samples;
+        var objects = Object.values(sample_data)
+        var dropdownMenu = d3.select("#selOption");
+        var dataset = dropdownMenu.property("value");
+        var filteredData = objects.filter(sd => sd.id === dataset);
+        filteredData.forEach(({ sample_values, otu_ids, otu_labels }) => {   
+            var sv = sample_values;
+            var otids = otu_ids
+            var otlabels = otu_labels
+            var slice_sv = sv.slice(0,10)
+            var slice_otids = otids.slice(0, 10);
+            var sort_otids = slice_otids.sort(function(a, b){return a-b})
+            // Reverse the array due to Plotly's defaults
+            var reverse_otids = sort_otids.reverse();
+            var desired_maximum_marker_size = 40;
+            var parsed_otids = parseFloat(otids);
+            var parsed_sv = parseFloat(sv);
+            var sizeref = (parsed_otids ** parsed_sv) / (desired_maximum_marker_size**2);
+            Plotly.restyle("plot-container plotly", "reverse_otids", [reverse_otids]);
+            Plotly.restyle("plot-container plotly", "slice_sv", [slice_sv]);
+            Plotly.restyle("plot-container plotly", "otlabels", [otlabels]);
+            Plotly.restyle("plot-container plotly", "otids", [otids]);
+            Plotly.restyle("bubble-container plotly", "otids", [otids]);
+            Plotly.restyle("bubble-container plotly", "sv", [sv]);
+            Plotly.restyle("bubble-container plotly", "otlabels", [otlabels]);
+            Plotly.restyle("bubble-container plotly", "sizeref", [sizeref]);
+        });
+    })};
+horibar(); 
+bubble();
+// 6. Update all of the plots any time that a new sample is selected.
 
-    });
-}); 
-};
-getData()
     // Assign the value of the dropdown menu option to a variable
     // Initialize an empty array for the country's data
 // 5. Display each key-value pair from the metadata JSON object somewhere on the page.
 
 // ![hw](Images/hw03.png)
-
-var select = document.getElementById("selDataset"); 
-
-
-
-
-
-// 6. Update all of the plots any time that a new sample is selected.
 
 // Additionally, you are welcome to create any layout that you would like for your dashboard. An example dashboard is shown below:
 
