@@ -22,7 +22,7 @@
       <div class="col-md-2">
         <div class="well">
           <h5>Test Subject ID No.:</h5>
-          <select id="selDataset" onchange="getData(this.value)" style="width:50px">
+          <select id="selOption" onchange="getData(this.value)" style="width:50px">
           </select>
         </div>
       </div>
@@ -43,9 +43,10 @@
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">Demographic Info</h3>
-        
+
       </div>
-        <div class="panel-body" id="Demo-info">
+      <div class="panel-body" id="Demo-info">
+        <div id="table-area" class="">
           <table id="table" class="table table-striped">
             <thead>
               <tr>
@@ -62,6 +63,7 @@
             </tbody>
           </table>
         </div>
+      </div>
       <div id="sample-metadata" class="panel-body"></div>
     </div>
   </div>
