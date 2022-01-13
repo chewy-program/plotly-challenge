@@ -39,9 +39,11 @@
         <script src="https://d3js.org/d3.v5.min.js"></script>
       </div>
     </div>
+    <div class = "row">
     <div class="col-md-5">
       <div id="gauge"></div>
       </div>
+    </div>
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">Demographic Info</h3>
@@ -52,13 +54,13 @@
           <table id="table" class="table table-striped">
             <thead>
               <tr>
-                <th class="table-head">ID</th>
-                <th class="table-head">Ethnicity</th>
-                <th class="table-head">Gender</th>
-                <th class="table-head">Age</th>
-                <th class="table-head">Location</th>
-                <th class="table-head">Type</th>
-                <th class="table-head">Wash Frequency</th>
+                <th class="table-head" onclick="sortTable(0)" >ID</th>
+                <th class="table-head" onclick="sortTable(1)">Ethnicity</th>
+                <th class="table-head" onclick="sortTable(2)">Gender</th>
+                <th class="table-head" onclick="sortTable(3)">Age</th>
+                <th class="table-head" onclick="sortTable(4)">Location</th>
+                <th class="table-head" onclick="sortTable(5)">Type</th>
+                <th class="table-head" onclick="sortTable(6)">Wash Frequency</th>
               </tr>
             </thead>
             <tbody>
@@ -69,10 +71,6 @@
       <div id="sample-metadata" class="panel-body"></div>
     </div>
   </div>
-  <div class="col-md-5">
-    <div id="bar"></div>
-  </div>
-  
   </div>
   </div>
   </div>
