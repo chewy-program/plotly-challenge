@@ -1,4 +1,5 @@
 // 1. Use the D3 library to read in `samples.json`.
+
 // 2. Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
 function sample_set() {d3.json("../StarterCode/samples.json").then((importedData) => {
     var allData = importedData;
@@ -67,7 +68,7 @@ function horibar() {d3.json("../StarterCode/samples.json").then((importedData) =
                 cmax: 50,
                 opacity: 0.6,
                 gap: 5,
-                text: otids,
+                text: reverse_otids,
                 line: {
                     color: slice_sv,
                     colorscale: [["Viridis"]],
@@ -176,17 +177,20 @@ function getData() {d3.json("../StarterCode/samples.json").then((importedData) =
             var desired_maximum_marker_size = 40;
             var parsed_otids = parseFloat(otids);
             var parsed_sv = parseFloat(sv);
+            console.log(parsed_sv)
             var sizeref = (parsed_otids ** parsed_sv) / (desired_maximum_marker_size**2);
-            Plotly.restyle("plot-container plotly", "reverse_otids", [reverse_otids]);
-            Plotly.restyle("plot-container plotly", "slice_sv", [slice_sv]);
-            Plotly.restyle("plot-container plotly", "otlabels", [otlabels]);
-            Plotly.restyle("plot-container plotly", "otids", [otids]);
-            Plotly.restyle("bubble-container plotly", "otids", [otids]);
-            Plotly.restyle("bubble-container plotly", "sv", [sv]);
-            Plotly.restyle("bubble-container plotly", "otlabels", [otlabels]);
+            console.log(sizeref)
+            Plotly.restyle("plot-container plotly", "x", reverse_otids);
+            Plotly.restyle("plot-container plotly", "y", [slice_sv]);
+            Plotly.restyle("plot-container plotly", "text", [otlabels]);
+            Plotly.restyle("plot-container plotly", "text", [otids]);
+            Plotly.restyle("bubble-container plotly", "x", [otids]);
+            Plotly.restyle("bubble-container plotly", "y", [sv]);
+            Plotly.restyle("bubble-container plotly", "text", [otlabels]);
             Plotly.restyle("bubble-container plotly", "sizeref", [sizeref]);
         });
     })};
+getData();
 horibar(); 
 bubble();
 // 6. Update all of the plots any time that a new sample is selected.
