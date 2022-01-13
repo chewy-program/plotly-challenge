@@ -55,8 +55,10 @@ function horibar() {d3.json("../StarterCode/samples.json").then((importedData) =
         reverse_otids = sort_otids.reverse();
 
         var bartrace = {
-            x: reverse_otids,
+            x: sort_otids,
             y: slice_sv,
+            xaxis: 'x1',
+            yaxis: sv,
             text: otlabels,
             name: "Belly Button research",
             type: "bar",
@@ -68,7 +70,7 @@ function horibar() {d3.json("../StarterCode/samples.json").then((importedData) =
                 cmax: 50,
                 opacity: 0.6,
                 gap: 5,
-                text: reverse_otids,
+                text: otlabels,
                 line: {
                     color: slice_sv,
                     colorscale: [["Viridis"]],
@@ -83,8 +85,15 @@ function horibar() {d3.json("../StarterCode/samples.json").then((importedData) =
         // Apply the group bar mode to the layout
         var barLayout = {
             title: "Sample Data Belly Button research",
-            xaxis: { title: "Sample Value" },
-            yaxis: { title: "OTU ID" },
+            xaxis: { 
+                title: "Sample Value" 
+            },
+            yaxis: { 
+                title: "OTU ID",
+                text: sv,
+                dticks: 1
+            },
+            showticklabels: true,
             margin: {
                 l: 100,
                 r: 100,
@@ -147,7 +156,7 @@ function bubble(){ d3.json("../StarterCode/samples.json").then((importedData) =>
             xaxis: {title: "OTU ID"},
             yaxis: {title: "Sample Values"},
             height: 600,
-            width: 900
+            width: 900,
         };
         Plotly.newPlot("bubble-container plotly", bubbleData, bubbleLayout);
         // * Use `otu_ids` for the marker colours.
@@ -157,6 +166,26 @@ function bubble(){ d3.json("../StarterCode/samples.json").then((importedData) =>
         // ![Bubble Chart](Images/bubble_chart.png)
     });
 })}
+function gauge() {d3.json("../StarterCode/samples.json").then((importedData) => {
+    var allData = importedData;
+    var metadata = allData.metadata
+    var objects = Object.values(metadata)
+    objects.forEach(({id, ethnicity, gender, age, location, bbtype, wfreq}) => {});
+
+    var gauge = [
+        {
+            domain: { x: [0, 1], y: [0, 1] },
+            value: 270,
+            title: { text: "Speed" },
+            type: "indicator",
+            mode: "gauge+number"
+        }
+    ];
+    
+    var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+    Plotly.newPlot('gauge', gauge, layout);
+});};
+gauge();
 d3.selectAll("#selOption").on("change", getData);
 function getData() {d3.json("../StarterCode/samples.json").then((importedData) => {
         var allData = importedData;
@@ -178,13 +207,14 @@ function getData() {d3.json("../StarterCode/samples.json").then((importedData) =
             var parsed_otids = parseFloat(otids);
             var parsed_sv = parseFloat(sv);
             console.log(parsed_sv)
+            console.log(parsed_otids)
+            console.log(desired_maximum_marker_size)
             var sizeref = (parsed_otids ** parsed_sv) / (desired_maximum_marker_size**2);
-            console.log(sizeref)
-            Plotly.restyle("plot-container plotly", "x", reverse_otids);
+            Plotly.restyle("plot-container plotly", "x", [sort_otids]);
             Plotly.restyle("plot-container plotly", "y", [slice_sv]);
             Plotly.restyle("plot-container plotly", "text", [otlabels]);
             Plotly.restyle("plot-container plotly", "text", [otids]);
-            Plotly.restyle("bubble-container plotly", "x", [otids]);
+            Plotly.restyle("bubble-container plotly", "x", otids);
             Plotly.restyle("bubble-container plotly", "y", [sv]);
             Plotly.restyle("bubble-container plotly", "text", [otlabels]);
             Plotly.restyle("bubble-container plotly", "sizeref", [sizeref]);
