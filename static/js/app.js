@@ -2,7 +2,7 @@
 
 // 2. Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
 function sample_set() {
-    d3.json("../StarterCode/samples.json").then((importedData) => {
+    d3.json("../data/samples.json").then((importedData) => {
         var allData = importedData;
         var metadata = allData.metadata;
         var objects = Object.values(metadata)
@@ -21,7 +21,7 @@ function sample_set() {
 sample_set();
 // 4. Display the sample metadata, i.e., an individual's demographic information.
 function tableData() {
-    d3.json("../StarterCode/samples.json").then((importedData) => {
+    d3.json("../data/samples.json").then((importedData) => {
         var allData = importedData;
         var metadata = allData.metadata
         var tbody = d3.select("tbody");
@@ -42,7 +42,7 @@ function tableData() {
 tableData();
 
 function horibar() {
-    d3.json("../StarterCode/samples.json").then((importedData) => {
+    d3.json("../data/samples.json").then((importedData) => {
         var allData = importedData;
         var sample_data = allData.samples;
 
@@ -115,7 +115,7 @@ function horibar() {
 }
 
 function bubble() {
-    d3.json("../StarterCode/samples.json").then((importedData) => {
+    d3.json("../data/samples.json").then((importedData) => {
         var allData = importedData;
 
         var sample_data = allData.samples;
@@ -230,7 +230,7 @@ function sortTable(n) {
 };
 
 function gauge() {
-    d3.json("../StarterCode/samples.json").then((importedData) => {
+    d3.json("../data/samples.json").then((importedData) => {
         var allData = importedData;
         var metadata = allData.metadata
         var objects = Object.values(metadata)
@@ -266,7 +266,7 @@ function gauge() {
 
 d3.selectAll("#selOption").on("change", getData);
 function getData() {
-    d3.json("../StarterCode/samples.json").then((importedData) => {
+    d3.json("../data/samples.json").then((importedData) => {
         var allData = importedData;
         var sample_data = allData.samples;
         var objects = Object.values(sample_data)
@@ -298,7 +298,7 @@ function getData() {
     });
 };
 function getMetaData() {
-    d3.json("../StarterCode/samples.json").then((importMetaData) => {
+    d3.json("../data/samples.json").then((importMetaData) => {
         var allData = importMetaData;
         var metadata = allData.metadata;
         var metaobjects = Object.values(metadata);
