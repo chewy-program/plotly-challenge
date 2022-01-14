@@ -1,6 +1,6 @@
 // 1. Use the D3 library to read in `samples.json`.
 
-// 2. Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
+
 function sample_set() {
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importedData) => {
 
@@ -21,6 +21,7 @@ function sample_set() {
 };
 sample_set();
 // 4. Display the sample metadata, i.e., an individual's demographic information.
+// Display each key-value pair from the metadata JSON object somewhere on the page.
 function tableData() {
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importedData) => {
 
@@ -42,7 +43,7 @@ function tableData() {
     });
 };
 tableData();
-
+// 2. Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
 function horibar() {
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importedData) => {
 
@@ -233,6 +234,7 @@ function sortTable(n) {
     }
 };
 
+// Adapt the Gauge Chart from <https://plot.ly/javascript/gauge-charts/> to plot the weekly washing frequency of the individual.
 function gauge() {
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importedData) => {
 
@@ -240,7 +242,7 @@ function gauge() {
         var metadata = allData.metadata
         var objects = Object.values(metadata)
         
-        objects.forEach(({id, wfreq }) => {
+        objects.forEach(({wfreq }) => {
             
             var gaugetrace = {
                 domain: { x: [0,1], y: [0,1] },
@@ -248,6 +250,7 @@ function gauge() {
                 title: { text: "Wash Frequency" },
                 type: "indicator",
                 mode: "gauge+number",
+                // You will need to modify the example gauge code to account for values ranging from 0 through 9.
                 gauge: {
                     axis: { range: [null, 9] },
                     steps: [
@@ -270,6 +273,7 @@ function gauge() {
 };
 
 d3.selectAll("#selOption").on("change", getData);
+// Update all of the plots any time that a new sample is selected.
 function getData() {
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importedData) => {
         var allData = importedData;
@@ -302,6 +306,7 @@ function getData() {
         });
     });
 };
+// Update the gauge chart whenever a new sample is selected.
 function getMetaData() {
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importMetaData) => {
         var allData = importMetaData;
