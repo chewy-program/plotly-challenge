@@ -234,24 +234,36 @@ function gauge() {
         var allData = importedData;
         var metadata = allData.metadata
         var objects = Object.values(metadata)
-        objects.forEach(({ id, ethnicity, gender, age, location, bbtype, wfreq }) => {
-            ;
-
+        
+        objects.forEach(({id, wfreq }) => {
+            
             var gaugetrace = {
-                domain: { x: [0, 1], y: wfreq },
+                domain: { x: [0,1], y: [0,1] },
                 value: wfreq,
                 title: { text: "Wash Frequency" },
                 type: "indicator",
-                mode: "gauge+number"
+                mode: "gauge+number",
+                gauge: {
+                    axis: { range: [null, 9] },
+                    steps: [
+                      { range: [0, 6], color: "lightblue" },
+                      { range: [3,6], color: "blue"},
+                      { range: [6, 9], color: "navy" }
+                    ],
+                  }
             };
 
             var gaugeScore = [gaugetrace];
-            var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+            var layout = {
+                width: 500,
+                height: 400,
+                margin: { t: 25, r: 25, l: 25, b: 25 }
+              };
             Plotly.newPlot('gauge', gaugeScore, layout);
         });
     });
 };
-gauge();
+
 d3.selectAll("#selOption").on("change", getData);
 function getData() {
     d3.json("../StarterCode/samples.json").then((importedData) => {
@@ -273,9 +285,6 @@ function getData() {
             var desired_maximum_marker_size = 40;
             var parsed_otids = parseFloat(otids);
             var parsed_sv = parseFloat(sv);
-            console.log(parsed_sv)
-            console.log(parsed_otids)
-            console.log(desired_maximum_marker_size)
             var sizeref = (parsed_otids ** parsed_sv) / (desired_maximum_marker_size ** 2);
             Plotly.restyle("plot-container plotly", "x", [sort_otids]);
             Plotly.restyle("plot-container plotly", "y", [slice_sv]);
@@ -286,11 +295,30 @@ function getData() {
             Plotly.restyle("bubble-container plotly", "text", [otlabels]);
             Plotly.restyle("bubble-container plotly", "sizeref", [sizeref]);
         });
-    })
+    });
 };
+function getMetaData() {
+    d3.json("../StarterCode/samples.json").then((importMetaData) => {
+        var allData = importMetaData;
+        var metadata = allData.metadata;
+        var metaobjects = Object.values(metadata);
+        var dropdownMenu = d3.select("#selOption");
+        var metadataset = dropdownMenu.property("value");
+        var filtermetaobject = metaobjects.filter(mo => mo.id == metadataset);
+        console.log(filtermetaobject)
+        filtermetaobject.forEach(({ id, wfreq }) => {
+            var wash = wfreq;
+            Plotly.restyle("gauge", "value", [wash]);
+        });
+    
+    });
+};
+
 getData();
+getMetaData();
 horibar();
 bubble();
+gauge();
 // 6. Update all of the plots any time that a new sample is selected.
 
     // Assign the value of the dropdown menu option to a variable
