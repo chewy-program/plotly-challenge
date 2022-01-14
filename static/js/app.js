@@ -2,7 +2,7 @@
 
 // 2. Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
 function sample_set() {
-    d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importedData) => {
+    d3.json("src/data/samples.json").then((importedData) => {
 
         var allData = importedData;
         var metadata = allData.metadata;
