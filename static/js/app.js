@@ -2,7 +2,11 @@
 
 // 2. Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
 function sample_set() {
+<<<<<<< HEAD
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importedData) => {
+=======
+    d3.json("./plotly-challlenge/data/samples.json").then((importedData) => {
+>>>>>>> 8e7a39750f66bc4d05fbcf366d87dfb54c5e19f1
         var allData = importedData;
         var metadata = allData.metadata;
         var objects = Object.values(metadata)
@@ -21,7 +25,11 @@ function sample_set() {
 sample_set();
 // 4. Display the sample metadata, i.e., an individual's demographic information.
 function tableData() {
+<<<<<<< HEAD
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importedData) => {
+=======
+    d3.json("./plotly-challlenge/data/samples.json").then((importedData) => {
+>>>>>>> 8e7a39750f66bc4d05fbcf366d87dfb54c5e19f1
         var allData = importedData;
         var metadata = allData.metadata
         var tbody = d3.select("tbody");
@@ -42,7 +50,11 @@ function tableData() {
 tableData();
 
 function horibar() {
+<<<<<<< HEAD
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importedData) => {
+=======
+    d3.json("./plotly-challlenge/data/samples.json").then((importedData) => {
+>>>>>>> 8e7a39750f66bc4d05fbcf366d87dfb54c5e19f1
         var allData = importedData;
         var sample_data = allData.samples;
 
@@ -115,7 +127,11 @@ function horibar() {
 }
 
 function bubble() {
+<<<<<<< HEAD
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importedData) => {
+=======
+    d3.json("./plotly-challlenge/data/samples.json").then((importedData) => {
+>>>>>>> 8e7a39750f66bc4d05fbcf366d87dfb54c5e19f1
         var allData = importedData;
 
         var sample_data = allData.samples;
@@ -230,7 +246,11 @@ function sortTable(n) {
 };
 
 function gauge() {
+<<<<<<< HEAD
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importedData) => {
+=======
+    d3.json("./plotly-challlenge/data/samples.json").then((importedData) => {
+>>>>>>> 8e7a39750f66bc4d05fbcf366d87dfb54c5e19f1
         var allData = importedData;
         var metadata = allData.metadata
         var objects = Object.values(metadata)
@@ -266,7 +286,11 @@ function gauge() {
 
 d3.selectAll("#selOption").on("change", getData);
 function getData() {
+<<<<<<< HEAD
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importedData) => {
+=======
+    d3.json("./plotly-challlenge/data/samples.json").then((importedData) => {
+>>>>>>> 8e7a39750f66bc4d05fbcf366d87dfb54c5e19f1
         var allData = importedData;
         var sample_data = allData.samples;
         var objects = Object.values(sample_data)
@@ -298,7 +322,11 @@ function getData() {
     });
 };
 function getMetaData() {
+<<<<<<< HEAD
     d3.json("https://chewy-program.github.io/plotly-challenge/data/samples.json").then((importMetaData) => {
+=======
+    d3.json("./plotly-challlenge/data/samples.json").then((importMetaData) => {
+>>>>>>> 8e7a39750f66bc4d05fbcf366d87dfb54c5e19f1
         var allData = importMetaData;
         var metadata = allData.metadata;
         var metaobjects = Object.values(metadata);
